@@ -1,0 +1,56 @@
+<section class="heading-section">
+    <h1>Todos</h1>
+  </section>
+
+  <div class="container add-todo-box-container" *ngIf="!loggedIn">
+    <div class="add-todo-box">
+  
+      <form>
+        <h2>LogIn</h2>
+  
+        <div style="margin: 0">
+            <mat-form-field class="add-todo-form" appearance="outline">
+                  <input [formControl]="userIdFormControl" matInput placeholder="User ID">
+              </mat-form-field>
+              <button [disabled]="!userIdFormControl.valid" (click)="onClickLogin()" class="submit-button" type="submit" mat-raised-button color="primary">Login</button>
+        </div>
+      </form>
+  
+    </div>
+  </div>
+  
+  <div class="container add-todo-box-container" *ngIf="loggedIn">
+    <div class="add-todo-box">
+  
+      <form >
+        <h2>New Todo</h2>
+  
+        <div style="margin: 0">
+            <mat-form-field class="add-todo-form" appearance="outline">
+                  <input [formControl]="todoFormControl" matInput placeholder="Task">
+              </mat-form-field>
+              <div class="button-wrapper">
+                <button [disabled]="!todoFormControl.valid" (click)="onAddTodo()" class="submit-button"  mat-raised-button color="primary">Add</button>
+                <button [disabled]="!isSyncAvailable()" (click)="syncTodos()" class="submit-button" type="submit" mat-raised-button color="primary">Sync</button>
+              </div>
+        </div>
+      </form>
+  
+    </div>
+  </div>
+  
+  <section class="section" *ngIf="loggedIn">
+    <div class="container">
+  
+      <div class="todos-list">
+        
+        <app-todo-item
+          *ngFor="let todo of todos"
+          [todo]="todo"
+          (todoClicked)="toggleCompleted(todo)"
+        ></app-todo-item>
+  
+      </div>
+  
+    </div>
+  </section>
